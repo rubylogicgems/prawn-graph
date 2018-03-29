@@ -36,7 +36,7 @@ module Prawn
         def render_line_chart
           prawn.bounding_box [@graph_area.point[0] + 5, @graph_area.point[1] - 20], width: @plot_area_width, height: @plot_area_height do
             j = 2
-            prawn.save_graphics_state do  
+            prawn.save_graphics_state do
               max_marked = false
               min_marked = false
 
@@ -46,7 +46,7 @@ module Prawn
                 width_per_point = (@plot_area_width / @series.size).round(2).to_f
                 spacing = width_per_point
 
-                prawn.line_width = 2
+                prawn.line_width    =  @canvas.theme.line_width
                 prawn.fill_color    =  @canvas.theme.color_for(@series)
                 prawn.stroke_color  =  @canvas.theme.color_for(@series)
 
@@ -60,10 +60,10 @@ module Prawn
                 this_x_offset    = ((spacing * j) - spacing) + (spacing / 2.0)
 
                 unless previous_value.zero? || this_value.zero?
-                  prawn.stroke_line([previous_x_offset, previous_y], [ this_x_offset, this_y ])  
+                  prawn.stroke_line([previous_x_offset, previous_y], [ this_x_offset, this_y ])
                   prawn.fill_color = @canvas.theme.markers
-                  prawn.fill_ellipse([ ( previous_x_offset), previous_y ], 1) 
-                  prawn.fill_ellipse([ ( this_x_offset), this_y ], 1)
+                  prawn.fill_ellipse([ ( previous_x_offset), previous_y ], @canvas.theme.elipse_width)
+                  prawn.fill_ellipse([ ( this_x_offset), this_y ], @canvas.theme.elipse_width)
                 end
 
                 if @series.mark_minimum?
@@ -78,7 +78,7 @@ module Prawn
 
                 j += 1
               end
-              
+
               mark_average_line
             end
             render_axes

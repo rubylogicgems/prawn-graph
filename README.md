@@ -151,6 +151,8 @@ theme expects to be initialised with a Hash in the following format:
   grid:'F2F4F4', 
   axes:'17202A', 
   markers:'34495E', 
+  line_width:0.2,
+  elipse_width:0.1,
   stroke_grid_lines:true, 
   default:'333333', 
   average:'34495E', 
@@ -169,6 +171,8 @@ Option              | Data type          | Description
 :grid               | string             | HEX color code used to color this part of the chart
 :axes               | string             | HEX color code used to color this part of the chart
 :markers            | string             | HEX color code used to color this part of the chart
+:line_width         | float              | Width of the chart line
+:elipse_width       | float              | Width of the circles used in chart line
 :stroke_grid_lines  | boolean            | Should the grid lines be stroked?
 :default            | string             | HEX color code used to color this part of the chart
 :average            | string             | HEX color code used to color this part of the chart
