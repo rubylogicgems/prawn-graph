@@ -2,7 +2,7 @@ require "securerandom"
 
 module Prawn
   module Graph
-    
+
     # A Prawn::Graph::Series represents a series of data which are to be plotted
     # on a chart.
     #
@@ -10,11 +10,13 @@ module Prawn
       attr_accessor :values, :options, :uuid
 
       DEFAULT_OPTIONS = {
-        title:            nil,
-        type:             :bar,
-        mark_average:     false,
-        mark_minimum:     false,
-        mark_maximum:     false,
+        title:        nil,
+        type:         :bar,
+        mark_average: false,
+        mark_minimum: false,
+        mark_maximum: false,
+        yaxis_min:    0,
+        yaxis_max:    0
       }
 
       def initialize(values = [], options = {})
@@ -45,17 +47,13 @@ module Prawn
       # @return [Numeric] The smallest value stored in the +values+ of this Series.
       #
       def min
-        if values.empty?
-          0
-        else
-          values.sort.collect{ |x| x unless x.zero? }.compact.first
-        end
+        options.yaxis_min || @values.min || 0
       end
 
       # @return [Numeric] The largest value stored in the +values+ of this Series.
       #
       def max
-        @values.max || 0
+        options.yaxis_max || @values.max || 0
       end
 
       # @return [Numeric] The average value stored in the +values+ of this Series.

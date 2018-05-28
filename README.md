@@ -11,23 +11,23 @@
 An extension for the [prawn pdf library][5] which adds the ability to draw graphs (or charts if
 you perfer) in PDF documents.
 
-Because Prawn::Graph only uses the native PDF drawing functions exposed by Prawn, it removes the need to 
+Because Prawn::Graph only uses the native PDF drawing functions exposed by Prawn, it removes the need to
 depend on projects like Gruff to generate heavy PNG / JPG images of such graphs and charts and then include
-those large blobs in your documents. The results may not be as pretty (yet), but the file-size differences 
+those large blobs in your documents. The results may not be as pretty (yet), but the file-size differences
 are dramatic.
 
-By default, graphs are drawn in monochrome, as that's likely how they will be printed. 
+By default, graphs are drawn in monochrome, as that's likely how they will be printed.
 
 This is free and open source software released under ther terms of the [MIT Licence](http://opensource.org/licenses/MIT).
 
-Its copyright is held by Ryan Stenhouse and the [other contributors][8] and it was first released in 
+Its copyright is held by Ryan Stenhouse and the [other contributors][8] and it was first released in
 2010.
 
 ## Compatibility
 
-This gem is built assuming a Ruby version of 2.0 or higher. Older Ruby versions may work but are not 
+This gem is built assuming a Ruby version of 2.0 or higher. Older Ruby versions may work but are not
 officially supported. We aim for compatibilty with 1.x and 2.x series of prawn. Any incomaptibilities
-with prawn versions should be treated as bugs and added to the [issue tracker][2]. 
+with prawn versions should be treated as bugs and added to the [issue tracker][2].
 
 We build automatically using Travis CI. Our [.travis.yml][9] file targets the same Ruby versions as
 [prawn itself][5] does.
@@ -35,13 +35,13 @@ We build automatically using Travis CI. Our [.travis.yml][9] file targets the sa
 
 ### Removed features:
 
-Unlike previous versions of `prawn-graph`, this version does not at this time include a theme api or the 
-ability to change the colors used to render the graph. 
+Unlike previous versions of `prawn-graph`, this version does not at this time include a theme api or the
+ability to change the colors used to render the graph.
 
 ### Removed deprecated methods
 
 The `bar_chart`, `line_chart`, `bar_graph`, and `line_graph` methods have been removed. This means that this
-version of prawn-graph is no-longer backwards compatible. If you _must_ use those old methods, then please 
+version of prawn-graph is no-longer backwards compatible. If you _must_ use those old methods, then please
 use version `0.9.10` and **upgrade your calls to prawn graph to use the new `graph` methods as soon as possible**.
 
 ## Installation
@@ -67,11 +67,11 @@ If you want to install the original gem add the following to your `Gemfile`:
 ```
 
 Alternatively, you can use Rubygems directly: `gem install prawn-graph`.
- 
+
 ## Acknowledgements
 
 With thanks to [株式会社アルム][3] ([Allm Inc][4]) for allowing Ryan Stenhouse the time to rebuild this version of
-prawn-graph. This updated version of prawn-graph was inspired and guided by [prawn-svg][1] by [Roger Nesbitt][6]. 
+prawn-graph. This updated version of prawn-graph was inspired and guided by [prawn-svg][1] by [Roger Nesbitt][6].
 
 Prawn Graph was originally sponsored by and built for use at [Purchasing Card Consultancy Ltd][7] while
 Ryan Stenhouse was employed there.
@@ -80,7 +80,7 @@ Ryan Stenhouse was employed there.
 
 This version of Prawn::Graph supports the following graph / chart types:
 
-  *  Bar Charts 
+  *  Bar Charts
   *  Line Charts
 
 Is your favourite chart type not supported yet? [Please request it][2], or if you are feeling particularly
@@ -97,7 +97,7 @@ to it.
   graph data, options = {}, &block.
 ```
 
-When called with just a set of data, prawn-graph will do its best to make the graph fit in the 
+When called with just a set of data, prawn-graph will do its best to make the graph fit in the
 available space. For a little more control over how the graphs are rendered in the document
 you can pass the following options to `graph` or `chart`:
 
@@ -124,6 +124,8 @@ Option        | Data type | Description
 :mark_average | boolean   | Should we mark a line showing the average value of the series? Defaults to false.
 :mark_minimum | boolean   | Should we mark the minimum value of the series? Defaults to false.
 :mark_maximum | boolean   | Should we mark the maximum value of the series? Defaults to false.
+:yaxis_min    | float     | Y-axis minimum, Defaults to `values.min` or 0
+:yaxis_max    | float     | Y-axis maximum, Defaults to `values.max` or 0
 :title        | string    | The title of this series, which will be shown in the series key.
 :type         | symbol    | How this series should be rendered. Defaults to `:bar`, valid options are `:bar`, `:line`.
 
@@ -143,11 +145,11 @@ Option        | Data type | Description
   Prawn::Document.generate('test.pdf') do
     graph series, width: 500, height: 200, title: "A Title for the chart", at: [10,700], xaxis_labels: xaxis_labels
   end
-``` 
+```
 
 ### Theming
 
-You can pass an instnace of `Prawn::Graph::Theme` using the `:theme` option to the `graph` and `chart` methods. The 
+You can pass an instnace of `Prawn::Graph::Theme` using the `:theme` option to the `graph` and `chart` methods. The
 theme expects to be initialised with a Hash in the following format:
 
 ```ruby
@@ -155,23 +157,23 @@ theme expects to be initialised with a Hash in the following format:
   series:
     [
       'EBEDEF',
-      'D6DBDF', 
-      '85929E', 
-      '34495E', 
-      '1B2631' 
-    ], 
-  title:'17202A', 
-  background:'FFFFFF', 
-  grid:'F2F4F4', 
-  axes:'17202A', 
-  markers:'34495E', 
+      'D6DBDF',
+      '85929E',
+      '34495E',
+      '1B2631'
+    ],
+  title:'17202A',
+  background:'FFFFFF',
+  grid:'F2F4F4',
+  axes:'17202A',
+  markers:'34495E',
   line_width:0.2,
   elipse_width:0.1,
-  stroke_grid_lines:true, 
-  default:'333333', 
-  average:'34495E', 
+  stroke_grid_lines:true,
+  default:'333333',
+  average:'34495E',
   max:'17202A',
-  min:'17202A' 
+  min:'17202A'
 }
 ```
 
@@ -202,14 +204,14 @@ Option              | Data type          | Description
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can
 also  run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the 
-version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, 
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the
+version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version,
 push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome [on GitHub][2]. This project is intended to be a 
-safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) 
+Bug reports and pull requests are welcome [on GitHub][2]. This project is intended to be a
+safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org)
 code of conduct.
 
 
