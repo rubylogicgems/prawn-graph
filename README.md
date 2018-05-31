@@ -46,24 +46,16 @@ use version `0.9.10` and **upgrade your calls to prawn graph to use the new `gra
 
 ## Installation
 
-To install this gem, first you'll need to build it:
+To install this gem, add the following to your `Gemfile`:
 
 ```
-gem build prawn-graph.gemspec
+gem 'prawn-graph', github: 'rubylogicgems/prawn-graph'
 ```
-
-Then, you'll need to install it:
-
-```
- gem install prawn-graph-1.0.6.gem
-```
-
-... and it's installed!
 
 If you want to install the original gem add the following to your `Gemfile`:
 
-```Gemfile
- gem 'prawn-graph', ' ~> 1.0'
+```
+gem 'prawn-graph', ' ~> 1.0'
 ```
 
 Alternatively, you can use Rubygems directly: `gem install prawn-graph`.

@@ -30,7 +30,12 @@ module Prawn
       end
 
       def font_sizes
-        @font_sizes ||= OpenStruct.new({default:      8, main_title:   10, axis_labels:  5, series_key:   8 })
+        @font_sizes ||= OpenStruct.new({
+          default: 8,
+          main_title: 10,
+          axis_labels: 5,
+          series_key: 8
+        })
       end
 
       def method_missing(method_name, *arguments)

@@ -2,7 +2,7 @@ module Prawn
   module Graph
     module ChartComponents
       # A Prawn::Graph::Canvas represents the area on which a graph will be drawn. Think of it
-      # as the container in which your chart / graph will be sized to fit within. 
+      # as the container in which your chart / graph will be sized to fit within.
       #
       class Canvas
         attr_reader :layout, :series, :prawn, :theme, :options
@@ -15,7 +15,10 @@ module Prawn
         def initialize(series, prawn, options = {}, &block)
           @series   = series
           verify_series_are_ok!
-          @options  =  {xaxis_labels: []}.merge(options.merge({ series_count: series.size }))
+          @options  = {
+            xaxis_labels: [],
+            yaxis_labels: true
+          }.merge(options.merge({ series_count: series.size }))
           @prawn    = prawn
           @theme    = options[:theme].nil? ? Prawn::Graph::Theme.default : options[:theme]
           @layout   = Prawn::Graph::Calculations::LayoutCalculator.new([prawn.bounds.width, prawn.bounds.height], @options, @theme).calculate
@@ -28,8 +31,8 @@ module Prawn
         #
         def draw
           prawn.bounding_box(position, :width => layout.canvas_width, :height => layout.canvas_height, padding: 0) do
-            prawn.save_graphics_state do         
-              apply_theme! 
+            prawn.save_graphics_state do
+              apply_theme!
               render_title_area!
               render_series_keys!
               render_graph_area!
@@ -75,7 +78,7 @@ module Prawn
 
         def render_title_area!
           if layout.title_area.renderable?
-            prawn.text_box "<color rgb=\"#{@theme.title}\">#{@options[:title]}</color>", at: layout.title_area.point, inline_format: true, 
+            prawn.text_box "<color rgb=\"#{@theme.title}\">#{@options[:title]}</color>", at: layout.title_area.point, inline_format: true,
             valign: :center, align: :center, size: @theme.font_sizes.main_title, width: layout.title_area.width, height: layout.title_area.height
           end
         end
@@ -91,7 +94,7 @@ module Prawn
                   prawn.line_width = 0.5
                   prawn.fill_color = theme.series[i]
 
-                  
+
                   series_offset = series_offset * theme.font_sizes.series_key
 
                   title = series.title || "Series #{series_offset}"
@@ -99,7 +102,7 @@ module Prawn
 
 
                   prawn.fill_and_stroke_rectangle([ theme.font_sizes.series_key, top_position ], theme.font_sizes.series_key, theme.font_sizes.series_key)
-                  
+
                   prawn.fill_color = theme.axes
                   prawn.text_box title, at: [ (theme.font_sizes.series_key * 3), top_position ], size: theme.font_sizes.series_key, height: (series_offset * 2)
                 end
@@ -121,7 +124,7 @@ module Prawn
             raise RuntimeError.new("Series provided must be an Array (or Array-like) object.")
           end
         end
-        
+
       end
     end
   end

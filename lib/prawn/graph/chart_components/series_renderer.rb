@@ -41,8 +41,8 @@ module Prawn
         def render_axes
           prawn.stroke_color  = @canvas.theme.axes
           prawn.fill_color  = @canvas.theme.axes
-          prawn.stroke_horizontal_line(0, @plot_area_width, at: 0) 
-          prawn.stroke_vertical_line(0, @plot_area_height, at: 0) 
+          prawn.stroke_horizontal_line(0, @plot_area_width, at: 0)
+          prawn.stroke_vertical_line(0, @plot_area_height, at: 0)
           prawn.fill_and_stroke_ellipse [ 0,0], 1
 
           add_y_axis_label(max)
@@ -53,22 +53,23 @@ module Prawn
           add_x_axis_labels
         end
 
-        def add_x_axis_labels 
+        def add_x_axis_labels
           return if @canvas.options[:xaxis_labels].size.zero?
           width_of_each_label = (@plot_area_width / @canvas.options[:xaxis_labels].size) - 1
           @canvas.options[:xaxis_labels].each_with_index do |label, i|
             offset    = i + 1
             position  = ((offset * width_of_each_label) - width_of_each_label) + 1
-            
+
             prawn.text_box  label, at: [ position, -2 ], width: width_of_each_label, height: 6, valign: :center, align: :center,
                             overflow: :shrink_to_fit
           end
         end
 
         def add_y_axis_label(value)
+          return if @canvas.options[:yaxis_labels] == false
           unless value.zero?
             y = (point_height_percentage(value) * @plot_area_height)
-            prawn.text_box "#{value}", at: [-14, y], height: 5, overflow: :shrink_to_fit, width: 12, valign: :bottom, align: :right 
+            prawn.text_box "#{value}", at: [-14, y], height: 5, overflow: :shrink_to_fit, width: 12, valign: :bottom, align: :right
           end
         end
 
@@ -83,7 +84,7 @@ module Prawn
           @prawn
         end
 
-        def max 
+        def max
           @series.max || 0
         end
 
